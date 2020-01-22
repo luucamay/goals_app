@@ -60,7 +60,17 @@ app.post('/goals', function(req, res) {
 		      res.json(goal);
 		    });
 });
-
+// GET a goal.
+// (Accessed at GET http://localhosto:8080/goals/goal_id)
+app.get('/goals/:id', function(req, res) {
+	  var goal_id = req.params.id;
+	  db.findOne({
+		      _id: goal_id
+		    }, {}, function(err, goal) {
+			        if (err) res.send(err);
+			        res.json(goal);
+			      });
+});
 
 // START THE SERVER
 // ===============================================
