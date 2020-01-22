@@ -5,8 +5,7 @@
 
 var express = require('express'),
   app = express(),
-  bodyParser = require('body-parser'), // Middleware to read POST data
-  exphbs = require('express-handlebars');
+  bodyParser = require('body-parser'); // Middleware to read POST data
 
 // SETUP
 // ===============================================
@@ -21,14 +20,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
-
-// Tell the app that the templating engine is Handlebars.
-app.engine('handlebars',
-  // Pass default configuration to express-handlebars module.
-  exphbs({
-    defaultLayout: 'main'
-  }));
 
 // Tell the app that the view engine is also Handlebars.
 app.set('view engine', 'handlebars');
