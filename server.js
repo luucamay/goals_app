@@ -72,6 +72,18 @@ app.get('/goals/:id', function(req, res) {
 			      });
 });
 
+// DELETE a goal.
+// (Accessed at DELETE http://localhost:8080/goals/goal_id)
+app.delete('/goals/:id', function(req, res) {
+	  var goal_id = req.params.id;
+	  db.remove({
+		      _id: goal_id
+		    }, {}, function(err, goal) {
+			        if (err) res.send(err);
+			        res.sendStatus(200);
+			      });
+});
+
 // START THE SERVER
 // ===============================================
 
