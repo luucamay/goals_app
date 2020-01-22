@@ -35,25 +35,32 @@ var db = new Datastore({
   timestampData: true // automatically add and manage the fields createdAt and updatedAt
 });
 
-// Let us check that we can save to the database.
-// Define a goal.
-var goal = {
-  description: 'Do 10 minutes meditation every day',
-};
-
-// Save this goal to the database.
-db.insert(goal, function(err, newGoal) {
-  if (err) console.log(err);
-  console.log(newGoal);
-});
-
 // ROUTES
 // ===============================================
 
-// Define the home page route.
-app.get('/', function(req, res) {
-  res.send('Our first route is working.:)');
+// GET all goals.
+// (Accessed at GET http://localhost:8080/goals)
+app.get('/goals', function(req, res) {
+  db.find({}).sort({
+    updatedAt: -1
+  }).exec(function(err, goals) {
+	  if (err) res.send(err);
+	  res.json(goals);
+  });
 });
+
+// POST a new goal.
+// (Accessed at POST http://localhost:8080/goals)
+app.post('/goals', function(req, res) {
+	  var goal = {
+		      description: req.body.description,
+		    };
+	  db.insert(goal, function(err, goal) {
+		      if (err) res.send(err);
+		      res.json(goal);
+		    });
+});
+
 
 // START THE SERVER
 // ===============================================
