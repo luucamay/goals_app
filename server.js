@@ -1,11 +1,37 @@
 // server.js
 
-// DEPENDENCIES AND SETUP
+// DEPENDENCIES
 // ===============================================
 
 var express = require('express'),
   app = express(),
-  port = Number(process.env.PORT || 8080);
+  bodyParser = require('body-parser'), // Middleware to read POST data
+  exphbs = require('express-handlebars');
+
+// SETUP
+// ===============================================
+
+// Set the port number.
+var   port = Number(process.env.PORT || 8080);
+
+// Set up body-parser.
+// To parse JSON:
+app.use(bodyParser.json());
+// To parse form data:
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+
+
+// Tell the app that the templating engine is Handlebars.
+app.engine('handlebars',
+  // Pass default configuration to express-handlebars module.
+  exphbs({
+    defaultLayout: 'main'
+  }));
+
+// Tell the app that the view engine is also Handlebars.
+app.set('view engine', 'handlebars');
 
 // DATABASE
 // ===============================================
